@@ -1,0 +1,12 @@
+<td ng-if="ingredient._source.name !== alias.name">
+{{ingredient._source.name}}</td>
+<div loadingSpin></div>
+
+<td ng-if="ingredient._source.name !== alias.name" ng-hide="ingredient._source.added == true">
+    <button class="btn btn-default" type="button" ng-click="add(ingredient._source, ingredient._source.id, ingredient._id)">Add alias for this ingredient 
+    </button> &nbsp;  <md-progress-circular ng-if="loadingSpin" class="md-hue-2" md-diameter="20px" md-mode="indeterminate"></md-progress-circular>
+    
+</td>
+<td ng-show="ingredient._source.added == true">
+    <i class="fa fa-check"></i>
+</td>

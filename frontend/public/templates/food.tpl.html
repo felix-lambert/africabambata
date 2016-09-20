@@ -1,0 +1,12 @@
+<td>{{food.name}}
+    <i ng-show="food.is_main_item" class="fa fa-diamond">
+    </i>
+</td>
+<td ng-hide="meal.added">
+    <button id="retrieve" class="btn btn-warning" type="button" ng-click="retrieve(food, food.id)"><i class="fa fa-close"></i>
+    </button>
+</td>
+<td ng-hide="meal.added">
+    <button id="edit" ng-hide="food.is_main_item == true" class="btn btn-success" type="button" ng-click="editMain(food.id)"><i class="fa fa-diamond"></i>
+    </button>
+</td>

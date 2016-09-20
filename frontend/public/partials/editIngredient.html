@@ -1,0 +1,142 @@
+<div loading></div>
+
+<a id="back" ng-href="/#/admin/ingredientalias"><i class="fa fa-reply-all fa-2x"></i>
+</a>
+<h2 class="text-center">{{alias.name}}</h2>
+<div ng-show="error" class="alert alert-danger" role="alert">
+    <span class="fa fa-meh-o"></span>
+    <span>Error: {{error}}</span>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Search for alias</h2>
+            <label for="search">items per page:</label>
+            <input class="form-control" type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+            <br/>
+            <div id="custom-search-input">
+                <form class="input-group col-md-12">
+                    <input type="text" class="form-control" ng-keydown="checkKeyDown($event)" class="" ng-model="ingredient" ng-change="searchIngredient()" name="x" placeholder="Recherche...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="submit">
+                        <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </form>
+            </div>
+            <br/>
+            <div id="exSelects">
+                <div class="table-responsive text-center col-md-12" >
+                    <table class="table">
+                        <tr class="active">
+                            <td>Ingredients</td>
+                        </tr>
+                        <tr class="active" dir-paginate="ingredient in ingredients | filter:searchText | itemsPerPage: pageSize" current-page="currentPage" ingredient>
+                        </tr>
+                    </table>
+                </div>
+                <div ng-controller="PaginateController">
+                    <div class="text-center">
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="templates/dirPagination.tpl.html"></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive text-center col-md-6" >
+            <h2 class="text-center">Alias associated</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="search">Items per page:</label>
+                        <input type="number" min="1" max="100" class="form-control" ng-model="foodPageSize">
+                    </div>
+                </div>
+                <table class="table">
+                    <br/>
+                    <tr class="active">
+                        <td>
+                            <button class="btn btn-default" ng-click="orderAlias('name')">Name</button>
+                            <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="form-control" type="text" placeholder="Search name..." ng-model="searchItem.name">
+                        </td>
+                    </tr>
+                    <tr dir-paginate="alias in aliases | orderBy:predicate:reverse | filter: searchText | filter:search | filter: searchItem | itemsPerPage: foodPageSize" current-page="currentFoodPage" pagination-id="paginate2">
+                        <td>{{alias.name}}
+                        </td>
+                    </tr>
+                </table>
+                <div ng-controller="PaginateController">
+                    <div class="text-center">
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="templates/dirPagination.tpl.html" pagination-id="paginate2"></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive text-center col-md-6" >
+            <h2 class="text-center">Items associated</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="search">Items per page:</label>
+                        <input type="number" min="1" max="100" class="form-control" ng-model="foodPageSize2">
+                    </div>
+                </div>
+                <table class="table">
+                    <br/>
+                    <tr class="active">
+                        <td>
+                            <button class="btn btn-default" id="order" ng-click="orderItems('name')">Name</button>
+                            <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="form-control" type="text" placeholder="Search name..." ng-model="searchItem.name">
+                        </td>
+                    </tr>
+                    <tr dir-paginate="item in items | orderBy:predicate:reverse | filter: searchItem | itemsPerPage: foodPageSize2" current-page="currentFoodPage" pagination-id="paginate3">
+                        <td>
+                            {{item.name}}
+                        </td>
+                    </tr>
+                </table>
+                <div ng-controller="PaginateController">
+                    <div class="text-center">
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="templates/dirPagination.tpl.html" pagination-id="paginate2">
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <md-content class="md-padding">
+                <md-autocomplete flex required
+                    md-input-name="autocompleteField"
+                    md-selected-item="selectedItem[$index]._source.name"
+                    md-search-text-change="selectedItemChange(searchTextNameAdd, $index)"
+                    md-search-text="searchTextNameAdd"
+                    md-selected-item-change="selectedItemChange(searchTextNameAdd)"
+                    md-items="add in querySearchName(searchTextNameAdd)"
+                    md-item-text="add._source.name"
+                    md-min-length="1"
+                    md-floating-label="Set as alias">
+                    <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-text="searchText">{{add._source.name}}</span>
+                    </md-item-template>
+
+                    <div ng-messages="searchTextNameAdd.$error">
+                        <div ng-message="required">This field is required</div>
+                    </div>
+                </md-autocomplete>
+            </md-content>
+
+        </div>
+        <button type="submit" class="btn btn-default" ng-click="setAlias(selectedItem[$index]._source.name._id, selectedItem[$index]._source.name._source.id)">Set alias</button>
+        <md-progress-circular ng-if="loadingSpin" class="md-hue-2" md-diameter="20px" md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

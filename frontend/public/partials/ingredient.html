@@ -1,0 +1,62 @@
+<div loading></div>
+
+<a id="back" ng-href="/#/admin"><i class="fa fa-reply-all fa-2x"></i>
+</a>
+
+<div ng-show="errorMessage" class="alert alert-danger" role="alert">
+    <span class="fa fa-meh-o"></span>
+    <span>{{errorMessage}}</span>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Search for alias</h2>
+            <div id="custom-search-input">
+                <form class="input-group col-md-12" ng-submit="">
+                    <input type="text" class="form-control" ng-keydown="checkKeyDown($event)" class="" ng-model="ingredient" ng-change="searchIngredient()" name="x" placeholder="Recherche...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="search">items per page:</label>
+            <input class="form-control" type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+        </div>
+    </div>
+</div>
+<div ng-show="error" class="alert alert-danger" role="alert">
+    <span class="fa fa-meh-o"></span>
+    <span>{{error}}</span>
+</div>
+<div class="container">
+    <br/>
+    <div class="row" id="exSelects">
+        <div class="table-responsive text-center col-md-12" >
+            <table class="table">
+                <tr class="active">
+                    <td>Ingredients</td>
+                    <td>See alias</td>
+                </tr>
+                <tr><td><label>Search: <input type="text" ng-model="searchText"></label></td></tr>
+                <tr dir-paginate="ingredient in ingredients | filter:searchText | itemsPerPage: pageSize" current-page="currentPage">
+                    <td>{{ingredient._source.name}}</td>
+                    <td>
+                        <a id="cl" ng-href="/admin/editingredientalias/{{ingredient._source.id}}">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div ng-controller="PaginateController">
+            <div class="text-center">
+                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="templates/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

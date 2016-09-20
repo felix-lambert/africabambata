@@ -1,0 +1,92 @@
+<div loading></div>
+
+<a id="back" ng-href="/#/admin"><i class="fa fa-reply-all fa-2x"></i>
+</a>
+
+<h3 class="text-center">Welcome <mark>{{user}}</mark></h3>
+
+<hr>
+
+<div ng-show="errorMessage" class="alert alert-danger" role="alert">
+    <span class="fa fa-meh-o"></span>
+    <span>{{errorMessage}}</span>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border text-center">Add a recipe</legend>
+                <form class="well form-search" ng-submit="createRecipe()" name="recipeForm">
+                    <div class="form-group">
+                        <label>Url:</label>
+                        <input class="form-control" type="text" ng-change="testUrl(recipe.url)" name="url" required ng-model="recipe.url" placeholder="Url">
+                        <div ng-show="error" class="alert alert-danger" role="alert">
+                            <span class="fa fa-meh-o"></span>
+                            <span>Error: {{error}}</span>
+                        </div>
+                        <!-- show an error if this isn't filled in -->
+                        <p class="help-block" ng-show="recipeForm.url.$error.required">The url is required.</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input class="form-control" name="name" type="text" ng-model="recipe.name" ng-minlength="3" required ng-maxlength="200"  placeholder="Name">
+                        <p class="help-block" ng-show="recipeForm.name.$error.required">The name is required.</p>
+                        <p class="help-block" ng-show="recipeForm.name.$error.maxlength">Name is too long.</p>
+                        <p class="help-block" ng-show="recipeForm.name.$error.minlength">Name is too short.</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Picture:</label>
+                        <input class="form-control" type="text" ng-change="testPictureUrl(recipe.picture)" ng-model="recipe.picture" placeholder="Picture">
+                        <div ng-show="pictureError" class="alert alert-danger" role="alert">
+                            <span class="fa fa-meh-o"></span>
+                            <span>Error: {{pictureError}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Time (minutes):</label>
+                        <input class="form-control" type="text" ng-change="testTotalTime(recipe.total_time)" ng-model="recipe.total_time" placeholder="Total Time">
+                        <div ng-show="totalTimeError" class="alert alert-danger" role="alert">
+                            <span class="fa fa-meh-o"></span>
+                            <span>Error: {{totalTimeError}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Servings:</label>
+                        <input class="form-control" type="text" ng-change="testServings(recipe.servings)" ng-model="recipe.servings" placeholder="Servings">
+                        <div ng-show="servingsError" class="alert alert-danger" role="alert">
+                            <span class="fa fa-meh-o"></span>
+                            <span>Error: {{servingsError}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">Recipe:</label>
+                        <textarea class="form-control" name="recipeParsed" placeholder="Parse ingredients here..." required ng-model="recipe.ingredients" rows="5"></textarea>
+                        <p class="help-block" ng-show="recipeForm.recipeParsed.$error.required">The recipe is required.</p>
+                    </div>
+                    <div class="form-group" ng-hide="error || pictureError || totalTimeError || servingsError">
+                        <button type="submit" id="parse" class="btn">Parse</button>
+                    </div>
+                </form>
+            </fieldset>
+            
+            <div loading></div>
+            <div ng-show="errorMessage" class="alert alert-danger" role="alert">
+                <span class="fa fa-meh-o"></span>
+                <span>{{errorMessage}}</span>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border text-center">Your recipe list</legend>
+             <div class="list-group" ng-repeat="recipe in recipes">
+                <a href="/#/monitorrecipe/{{recipe.id}}" class="list-group-item">{{recipe.name}}</a>
+                <a href="/#/basket/{{recipe.id}}" ng-hide="recipe.notLinkedRecipe"><i class="fa fa-shopping-basket fa-2x"></i></a>
+                
+                <md-button ng-click="eraze(recipe.id)" class="md-raised md-warn">Delete</md-button>
+            </div>
+            </fieldset>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,427 @@
+<div loading="">
+</div>
+<a id="back" ng-href="/#/monitorrecipe/{{recipeId}}">
+    <i class="fa fa-reply-all fa-2x">
+    </i>
+</a>
+<h2 class="text-center" ng-show="!myModel">
+    Link recipe list
+</h2>
+<h2 class="text-center" ng-show="myModel">
+    {{myModel}}
+    <small>
+        {{url}}
+    </small>
+</h2>
+<div class="alert alert-danger" ng-show="errorMessage" role="alert">
+    <span class="fa fa-meh-o">
+    </span>
+    <span>
+        {{errorMessage}}
+    </span>
+</div>
+<p>Do you want to link to a new retailer ?</p>
+<md-input-container class="md-block">
+    <label ng-if="!myModel">
+        Please select a retailer
+    </label>
+    <label ng-if="myModel">
+        {{myModel}}
+    </label>
+    <md-select data-ng-change="save(myModel)" name="myModel" ng-model="myModel" required="">
+        <md-option value="freshdirect">
+            Fresh Direct
+        </md-option>
+        <md-option value="instacart">
+            Instacart
+        </md-option>
+        <md-option value="peapod">
+            Peapod
+        </md-option>
+        <md-option value="safeway">
+            Safeway
+        </md-option>
+        <md-option value="shipt">
+            Shipt
+        </md-option>
+        <md-option value="walmart">
+            Walmart
+        </md-option>
+    </md-select>
+    <div class="errors" ng-if="myForm.$dirty" ng-messages="myForm.myModel.$error">
+        <div ng-message="required">
+            Required
+        </div>
+    </div>
+</md-input-container>
+<md-button ng-click="clearValue()" ng-disabled="!myModel" style="margin-right: 20px;">
+    Clear
+</md-button>
+<md-progress-circular class="md-hue-2" md-diameter="20px" md-mode="indeterminate" ng-if="loadingSpin">
+</md-progress-circular>
+    <div class="container well" ng-show="main">
+        <div class="row" ng-if="safeway.length > 0">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default coupon">
+                    <div class="panel-heading" id="head">
+                        <div class="panel-title" id="title">
+                            <i class="fa fa-shopping-basket fa-2x"></i>
+                            <span class="hidden-xs">Safeway</span>
+                            <span class="visible-xs">Safeway</span>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Published
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionDefault" class="label-default"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        
+                        <div class="col-md-9">
+                            <ul class="items" ng-repeat="saf in safeway track by $index">
+                                <div ng-retailer retailer="saf" id="2"></div>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="offer">
+                                <span>${{safewayPrice}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="red" ng-if="peapod.length > 0">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-danger coupon">
+                    <div class="panel-heading" id="head">
+                        <div class="panel-title" id="title">
+                            <i class="fa fa-shopping-basket fa-2x"></i>
+                            <span class="hidden-xs">Peapod</span>
+                            <span class="visible-xs">Peapod</span>
+                            <!-- List group -->
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Published
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionDefault" class="label-default"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-9">
+                            <ul class="items" ng-repeat="pea in peapod track by $index">
+                                <div ng-retailer retailer="pea" id="6">
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="offer text-danger">
+                                <span>${{peapodPrice}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" id="green" ng-if="walmart.length > 0">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-success coupon">
+                    <div class="panel-heading" id="head">
+                        <div class="panel-title" id="title">
+                            <i class="fa fa-shopping-basket fa-2x"></i>
+                            <span class="hidden-xs">Walmart</span>
+                            <span class="visible-xs">Walmart</span>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Published
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionDefault" class="label-default"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        
+                        <div class="col-md-9">
+                            <ul class="items" ng-repeat="wal in walmart track by $index">
+                                <div ng-retailer retailer="wal" id="8"></div>
+                                <md-button class="md-raised" ng-click="edit(parse.name)">
+                                    <i class="fa fa-pencil">
+                                    </i>
+                                </md-button>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="offer text-success">
+                                <span>${{walmartPrice}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" id="lightblue" ng-if="freshdirect.length > 0">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-info coupon">
+                    <div class="panel-heading" id="head">
+                        <div class="panel-title" id="title">
+                            <i class="fa fa-shopping-basket fa-2x"></i>
+                            <span class="hidden-xs">Fresh Direct</span>
+                            <span class="visible-xs">Fresh Direct</span>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Published
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionDefault" class="label-default"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-9">
+                            <ul class="items" ng-repeat="fre in freshdirect track by $index">
+                                <div ng-retailer retailer="fre" id="9"></div>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="offer text-info">
+                                <span>${{freshdirectPrice}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" id="yellow" ng-if="instacart.length > 0">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-warning coupon">
+                    <div class="panel-heading" id="head">
+                        <div class="panel-title" id="title">
+                            <i class="fa fa-shopping-basket fa-2x"></i>
+                            <span class="hidden-xs">Instacart</span>
+                            <span class="visible-xs">Instacart</span>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Published
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionDefault" class="label-default"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        
+                        <div class="col-md-9">
+                            <ul class="items" ng-repeat="ins in instacart track by $index">
+                                <div ng-retailer retailer="ins" id="207"></div>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 text-warning">
+                            <div class="offer">
+                                <span>${{instacartPrice}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" id="blue" ng-if="shipt.length > 0">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-primary coupon">
+                    <div class="panel-heading" id="head">
+                        <div class="panel-title" id="title">
+                            <i class="fa fa-shopping-basket fa-2x"></i>
+                            <span class="hidden-xs">Shipt</span>
+                            <span class="visible-xs">Shipt</span>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Published
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionDefault" class="label-default"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-9">
+                            <ul class="items" ng-repeat="shi in shipt track by $index">
+                                <div ng-retailer retailer="shi" id="209"></div>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="offer text-primary">
+                                <span>${{shiptPrice}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<md-content >
+    <md-list>
+        <md-list-item class="md-3-line col-md-offset-1" ng-repeat="parse in parsed track by $index">
+            <div class="md-list-item-text text-center" ng-show="watch">
+                <h3 class="bg-success col-md-12" ng-if="parse.description">
+                    {{parse.name}}
+                    <small>
+                        {{parse.qty}}
+                    </small>
+                    <i class="fa fa-check">
+                    </i>
+                    <md-button class="md-raised" ng-click="edit(parse.name)" ng-if="parse.text == true">
+                        <i class="fa fa-pencil">
+                        </i>
+                    </md-button>
+                </h3>
+                <h3 class="bg-danger col-md-14" ng-if="!parse.description">
+                    Link {{parse.name}}
+                    <md-button class="md-raised" ng-click="edit(parse.name)" ng-if="parse.text == true">
+                        <i class="fa fa-pencil">
+                        </i>
+                    </md-button>
+                </h3>
+            </div>
+            <!-- ng-if="parse.text == false" -->
+            <div class="md-list-item-text col-md-6" ng-if="parse.text == false" ng-show="watch">
+                <md-content class="md-padding" ng-if="!parse.description">
+                    <div layout-gt-sm="row">
+                        <md-autocomplete flex="" md-floating-label="Add item" md-input-name="autocompleteField" md-item-text="add._source.name" md-items="add in querySearchAdd(searchTextNameAdd)" md-min-length="1" md-search-text="searchTextNameAdd" md-search-text-change="selectedItemChange(searchTextNameAdd, $index)" md-selected-item="selectedItem[$index].name" md-selected-item-change="selectedItemChange(searchTextNameAdd)" required="">
+                            <md-item-template>
+                                <md-whiteframe flex-gt-md="10" flex-gt-sm="20" flex-sm="30" layout="" layout-align="center center">
+                                    <div back-img="{{add._source.suggest.payload.picture}}" class="img-responsive" ng-show="add._source.suggest.payload.picture">
+                                        <p style="padding-left: 50px;">
+                                            <a href="{{add._source.suggest.payload.url}}" md-highlight-text="searchText" target="_blank">
+                                                {{add._source.name}} - {{add._source.suggest.payload.price}}
+                                            </a>
+                                        </p>
+                                    </div>
+                                </md-whiteframe>
+                                <span md-highlight-text="searchText">
+                                    (no image)
+                                </span>
+                                <a href="{{add._source.suggest.payload.url}}" md-highlight-text="searchText" target="_blank">
+                                    {{add._source.name}} - {{add._source.suggest.payload.price}}
+                                </a>
+                            </md-item-template>
+                            <div ng-messages="searchTextNameAdd.$error">
+                                <div ng-message="required">
+                                    This field is required
+                                </div>
+                            </div>
+                        </md-autocomplete>
+                    </div>
+                </md-content>
+                <md-content class="md-padding" md-cols="12" md-cols-gt-md="12" md-cols-md="12" ng-if="parse.description && parse.text == false">
+                    <div layout-gt-sm="row">
+                        <md-autocomplete flex="" md-floating-label="{{parse.description}}" md-input-name="autocompleteField" md-item-text="add._source.name" md-items="add in querySearchAdd(searchTextNameAdd)" md-min-length="1" md-search-text="searchTextNameAdd" md-search-text-change="selectedItemChange(searchTextNameAdd, $index)" md-selected-item="selectedItem[$index].name" md-selected-item-change="selectedItemChange(searchTextNameAdd)" required="">
+                            <md-item-template>
+                                <md-whiteframe flex-gt-md="10" flex-gt-sm="20" flex-sm="30" layout="" layout-align="center center">
+                                    <div back-img="{{add._source.suggest.payload.picture}}" class="img-responsive" ng-show="add._source.suggest.payload.picture">
+                                        <p style="padding-left: 50px;">
+                                            <a href="{{add._source.suggest.payload.url}}" md-highlight-text="searchText" target="_blank">
+                                                {{add._source.name}} - {{add._source.suggest.payload.price}}
+                                            </a>
+                                        </p>
+                                    </div>
+                                </md-whiteframe>
+                                <span md-highlight-text="searchText">
+                                    (no image)
+                                </span>
+                                <a href="{{add._source.suggest.payload.url}}" md-highlight-text="searchText" target="_blank">
+                                    {{add._source.name}} - {{add._source.suggest.payload.price}}
+                                </a>
+                            </md-item-template>
+                            <div ng-messages="searchTextNameAdd.$error">
+                                <div ng-message="required">
+                                    This field is required
+                                </div>
+                            </div>
+                        </md-autocomplete>
+                    </div>
+                </md-content>
+            </div>
+            <div class="md-list-item-text col-md-6" ng-show="noLink">
+                <md-content class="md-padding">
+                    <div layout-gt-sm="row">
+                        <md-autocomplete flex="" md-floating-label="Add item" md-input-maxlength="100" md-input-minlength="1" md-input-name="autocompleteFieldAdd" md-item-text="add._source.name" md-items="add in querySearchAdd(searchTextNameAdd)" md-no-cache="noCache" md-search-text="searchTextNameAdd" md-selected-item="selectedItem[$index].name" md-selected-item-change="selectedItemChange(searchTextNameAdd, $index)" required="">
+                            <md-item-template>
+                                <md-whiteframe flex-gt-md="10" flex-gt-sm="20" flex-sm="30" layout="" layout-align="center center">
+                                    <div back-img="{{add._source.suggest.payload.picture}}" class="img-responsive" ng-show="add._source.suggest.payload.picture">
+                                        <p style="padding-left: 50px;">
+                                            <a href="{{add._source.suggest.payload.url}}" md-highlight-text="searchText" target="_blank">
+                                                {{add._source.name}} - {{add._source.suggest.payload.price}}
+                                            </a>
+                                        </p>
+                                    </div>
+                                </md-whiteframe>
+                                <span md-highlight-text="searchText">
+                                    (no image)
+                                </span>
+                                <a href="{{add._source.suggest.payload.url}}" md-highlight-text="searchText" target="_blank">
+                                    {{add._source.name}} - {{add._source.suggest.payload.price}}
+                                </a>
+                            </md-item-template>
+                        </md-autocomplete>
+                    </div>
+                </md-content>
+            </div>
+            <div class="md-list-item-text" ng-show="watch && parse.text == false">
+                <md-input-container class="md-icon-float md-icon-right md-block" ng-if="parse.qty">
+                    <input min="0" ng-model="parse.qty" step="0" type="number">
+                    </input>
+                </md-input-container>
+                <md-input-container class="md-icon-float md-icon-right md-block" ng-if="!parse.qty">
+                    <input min="0" ng-model="add[$index].quantity" placeholder="Add quantity" step="0" type="number">
+                    </input>
+                </md-input-container>
+            </div>
+            <div class="md-list-item-text" ng-show="noLink">
+                <md-input-container class="md-icon-float md-icon-right md-block">
+                    <input min="0" ng-model="add[$index].quantity" placeholder="Add quantity" step="0" type="number">
+                    </input>
+                </md-input-container>
+            </div>
+            <!-- && parse.text == false -->
+            <div class="md-list-item-text" ng-if="parse.qty && parse.text == false" ng-show="watch">
+                <md-button class="md-primary" md-no-ink="" ng-click="editL(selectedItem[$index].name._source.suggest.payload.item_id, parse.qty, $index, retailer.id)">
+                    Edit
+                </md-button>
+                <md-button class="md-raised md-warn" ng-click="text(parse.id)">
+                    <i class="fa fa-info">
+                    </i>
+                </md-button>
+            </div>
+            <div class="md-list-item-text" ng-if="!parse.qty && parse.text == false" ng-show="watch">
+                <md-button class="md-primary" md-no-ink="" ng-click="addL(selectedItem[$index].name._source.suggest.payload.item_id, add[$index].quantity, $index, retailer.id)" ng-disabled="!selectedItem[$index].name || !add[$index].quantity">
+                    Add
+                </md-button>
+            </div>
+        </md-list-item>
+    </md-list>
+</md-content>
+<md-button class="md-primary col-md-12" md-no-ink="" ng-click="link(selectedItem, add)" ng-show="noLink">
+    Link
+</md-button>

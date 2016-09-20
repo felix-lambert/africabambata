@@ -1,0 +1,173 @@
+<div loading></div>
+<a id="back" ng-href="/#/recipe">
+    <i class="fa fa-reply-all fa-2x"></i>
+</a>
+<h2 class="text-center">Basket</h2>
+<div class="container well">
+    <div class="row" ng-if="safeway.length > 0">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default coupon">
+                <div class="panel-heading" id="head">
+                    <div class="panel-title" id="title">
+                        <i class="fa fa-shopping-basket fa-2x"></i>
+                        <span class="hidden-xs">Safeway</span>
+                        <span class="visible-xs">Safeway</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    
+                    <div class="col-md-9">
+                        <ul class="items" ng-repeat="saf in safeway track by $index">
+                            <div ng-retailer retailer="saf" id="2"></div>
+                            <li>
+                                <img alt="(No image) " src="{{saf.image_url}}" class="img-rounded" width="50" height="50"></img>{{saf.qty}} {{saf.name}} <div ng-if="parse.price">at {{saf.price}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="offer">
+                            <span>${{safewayPrice}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="red" ng-if="peapod.length > 0">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-danger coupon">
+                <div class="panel-heading" id="head">
+                    <div class="panel-title" id="title">
+                        <i class="fa fa-shopping-basket fa-2x"></i>
+                        <span class="hidden-xs">Peapod</span>
+                        <span class="visible-xs">Peapod</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-9">
+                        <ul class="items" ng-repeat="pea in peapod track by $index">
+                            <div ng-retailer retailer="pea" id="6"></div>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="offer text-danger">
+                            <span>${{peapodPrice}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" id="green" ng-if="walmart.length > 0">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-success coupon">
+                <div class="panel-heading" id="head">
+                    <div class="panel-title" id="title">
+                        <i class="fa fa-shopping-basket fa-2x"></i>
+                        <span class="hidden-xs">Walmart</span>
+                        <span class="visible-xs">Walmart</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    
+                    <div class="col-md-9">
+                        <ul class="items" ng-repeat="wal in walmart track by $index">
+                            <div ng-retailer retailer="wal" id="8"></div>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="offer text-success">
+                            <span>${{walmartPrice}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" id="lightblue" ng-if="freshdirect.length > 0">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-info coupon">
+                <div class="panel-heading" id="head">
+                    <div class="panel-title" id="title">
+                        <i class="fa fa-shopping-basket fa-2x"></i>
+                        <span class="hidden-xs">Fresh Direct</span>
+                        <span class="visible-xs">Fresh Direct</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-9">
+                        <ul class="items" ng-repeat="fre in freshdirect track by $index">
+                            <div ng-retailer retailer="fre" id="9"></div>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="offer text-info">
+                            <span>${{freshdirectPrice}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" id="yellow" ng-if="instacart.length > 0">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-warning coupon">
+                <div class="panel-heading" id="head">
+                    <div class="panel-title" id="title">
+                        <i class="fa fa-shopping-basket fa-2x"></i>
+                        <span class="hidden-xs">Instacart</span>
+                        <span class="visible-xs">Instacart</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    
+                    <div class="col-md-9">
+                        <ul class="items" ng-repeat="ins in instacart track by $index">
+                            <div ng-retailer retailer="ins" id="207"></div>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 text-warning">
+                        <div class="offer">
+                            <span>${{instacartPrice}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" id="blue" ng-if="shipt.length > 0">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary coupon">
+                <div class="panel-heading" id="head">
+                    <div class="panel-title" id="title">
+                        <i class="fa fa-shopping-basket fa-2x"></i>
+                        <span class="hidden-xs">Shipt</span>
+                        <span class="visible-xs">Shipt</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-9">
+                        <ul class="items" ng-repeat="shi in shipt track by $index">
+                            <div ng-retailer retailer="shi" id="209"></div>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="offer text-primary">
+                            <span>${{shiptPrice}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="price.length == 0">
+    <div class="alert alert-danger" role="alert">
+        <span class="fa fa-meh-o"></span>
+        <span>Your basket is empty. You need to link your ingredients to a retailer.</span>
+    </div>
+</div>

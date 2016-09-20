@@ -1,0 +1,222 @@
+<div loading></div>
+<a id="back" ng-href="/#/recipes"><i class="fa fa-reply-all fa-2x"></i>
+</a>
+<div ng-show="errorMessage" class="alert alert-danger" role="alert">
+    <span class="fa fa-meh-o"></span>
+    <span>{{errorMessage}}</span>
+</div>
+<div class="alert alert-success" role="alert">
+    <p class="text-center">The parser did'nt work well? You can edit here your recipe or your ingredients. When everything is done, you can link the ingredients of your recipe to a retailer</p>
+</div>
+<md-button md-no-ink ng-click="linkRecipe()" class="md-primary col-md-12">Link this recipe</md-button>
+<div class="text-center col-md-12" >
+    <h2>Edit recipe</h2>
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <img src="{{picture}}" ng-show="0 < picture.length" />
+            <h3>{{url}}</h3>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <form class="well form-search" ng-submit="editRecipe()">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input class="form-control" type="text" ng-model="recipe.name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label>Picture:</label>
+                    <input class="form-control" type="text" ng-change="testPictureUrl(recipe.picture)" ng-model="recipe.picture" placeholder="Picture">
+                    <div ng-show="pictureError" class="alert alert-danger" role="alert">
+                        <span class="fa fa-meh-o"></span>
+                        <span>Error: {{pictureError}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Total Time (minutes):</label>
+                    <input class="form-control" type="text" ng-change="testTotalTime(recipe.total_time)" ng-model="recipe.total_time" placeholder="Total Time">
+                    <div ng-show="totalTimeError" class="alert alert-danger" role="alert">
+                        <span class="fa fa-meh-o"></span>
+                        <span>Error: {{totalTimeError}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Servings:</label>
+                    <input class="form-control" type="text" ng-change="testServings(recipe.servings)" ng-model="recipe.servings" placeholder="Servings">
+                    <div ng-show="servingsError" class="alert alert-danger" role="alert">
+                        <span class="fa fa-meh-o"></span>
+                        <span>Error: {{servingsError}}</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-hide="pictureError || totalTimeError || servingsError">
+                    <button type="submit" id="edit" class="btn">Edit</button>
+                    <div ng-show="editSuccess" class="alert alert-success" role="alert">
+                        <span class="fa fa-meh-o"></span>
+                        <span>{{editSuccess}}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="text-center col-md-12" >
+    <h2>Edit Ingredients</h2>
+    <table class="table">
+        <tr class="active">
+            <td class="col-md-2"><md-content class="md-padding"><div layout-gt-sm="row">Name</div></md-content></td>
+            <td class="col-md-2"><md-content class="md-padding"><div layout-gt-sm="row">Quantity</div></md-content></td>
+            <td class="col-md-2"><md-content class="md-padding"><div layout-gt-sm="row">Unit</div></md-content></td>
+            <td><md-content class="md-padding"><div layout-gt-sm="row">Original text</div></md-content></td>
+            <td><md-content class="md-padding"><div layout-gt-sm="row">Ingredient linked</div></md-content></td>
+            <td><md-content class="md-padding"><div layout-gt-sm="row">Is reviewed</div></md-content></td>
+            <td><md-content class="md-padding"><div layout-gt-sm="row">Has error</div></md-content></td>
+            <td class="col-md-1"><md-content class="md-padding"><div layout-gt-sm="row">Action</div></md-content></td>
+        </tr>
+        <tr class="active">
+            <td class="col-md-6">
+                <div class="padded-row">
+                </div>
+                <div angucomplete-alt
+                    id="ex14"
+                    placeholder="Add ingredient"
+                    pause="100"
+                    selected-object="itemSelected"
+                    local-search="localSearch"
+                    remote-api-handler="querySearchAdd"
+                    title-field="name"
+                    minlength="1"
+                    input-class="form-control form-control-small"
+                    match-class="highlight"
+                    >
+                </div>
+            </td>
+            <td class="col-md-2">
+                <md-input-container class="md-icon-float md-icon-right md-block">
+                <input placeholder="Add quantity" ng-model="add.quantity" type="number" min="0" step="0.1">
+                </md-input-container>
+            </td>
+            <td class="col-md-2">
+                <md-content class="md-padding">
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Add unit</label>
+                        <md-select ng-model="selectedItemChangeAdd.unit">
+                            <md-option value="1">g</md-option>
+                            <md-option value="2">mg</md-option>
+                            <md-option value="3">mcg</md-option>
+                            <md-option value="6">cup</md-option>
+                            <md-option value="7">fluid ounce</md-option>
+                            <md-option value="8">fl</md-option>
+                            <md-option value="9">gal</md-option>
+                            <md-option value="10">oz</md-option>
+                            <md-option value="11">pt</md-option>
+                            <md-option value="12">qt</md-option>
+                            <md-option value="13">tbs</md-option>
+                            <md-option value="14">tsp</md-option>
+                            <md-option value="15">stick</md-option>
+                            <md-option value="16">l</md-option>
+                            <md-option value="17">ml</md-option>
+                            <md-option value="18">dl</md-option>
+                            <md-option value="19">lb</md-option>
+                            <md-option value="20">kg</md-option>
+                            <md-option value="21">dkg</md-option>
+                            <md-option value="22">cl</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td></td>
+        <td></td>
+        <td class="col-md-1">
+            <md-button class="md-raised md-primary" ng-disabled="!selectedItemChangeAdd.unit || !add.quantity || !selected.description && !queryName" ng-click="addIngredient(selectedItemChangeAdd, add.quantity)"><i class="fa fa-save"></i></md-button>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr ng-repeat="parse in parsed track by $index">
+        <td class="col-md-6" ng-if="!parse.text">
+            <div class="padded-row">
+            </div>
+            <div angucomplete-alt
+                id="ex14"
+                placeholder="{{parse.name}}"
+                pause="100"
+                selected-object="itemSelected"
+                local-search="localSearch"
+                remote-api-handler="querySearchAdd"
+                title-field="name"
+                minlength="1"
+                input-class="form-control form-control-small"
+                match-class="highlight"
+                >
+            </div>
+        </td>
+        <td class="col-md-6" ng-if="parse.text">
+            {{parse.name}}
+        </td>
+        <td class="col-md-2" ng-if="!parse.text">
+            <md-input-container class="md-icon-float md-icon-right md-block">
+            <input ng-model="parse.quantity" type="number" min="0" step="0.1">
+            </md-input-container>
+        </td>
+        <td class="col-md-6" ng-if="parse.text">
+            {{parse.quantity}}
+        </td>
+        <td class="col-md-2" ng-if="!parse.text">
+            <md-content class="md-padding">
+            <div layout-gt-sm="row">
+                <md-input-container>
+                <label>{{parse.unit}}</label>
+                    <md-select ng-model="parse.unitId">
+                        <md-option value="1">g</md-option>
+                        <md-option value="2">mg</md-option>
+                        <md-option value="3">mcg</md-option>
+                        <md-option value="6">cup</md-option>
+                        <md-option value="7">fluid ounce</md-option>
+                        <md-option value="8">fl</md-option>
+                        <md-option value="9">gal</md-option>
+                        <md-option value="10">oz</md-option>
+                        <md-option value="11">pt</md-option>
+                        <md-option value="12">qt</md-option>
+                        <md-option value="13">tbs</md-option>
+                        <md-option value="14">tsp</md-option>
+                        <md-option value="15">stick</md-option>
+                        <md-option value="16">l</md-option>
+                        <md-option value="17">ml</md-option>
+                        <md-option value="18">dl</md-option>
+                        <md-option value="19">lb</md-option>
+                        <md-option value="20">kg</md-option>
+                        <md-option value="21">dkg</md-option>
+                        <md-option value="22">cl</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            </md-content>
+        </td>
+        <td class="col-md-6" ng-if="parse.text">
+            {{parse.unit}}
+        </td>
+        <td>{{parse.original_text}}</td>
+        <td></td>
+        <td>
+            {{parse.is_reviewed}}
+        </td>
+        <td>
+            {{parse.has_error}}
+        </td>
+        <td ng-if="parse.text">
+            <md-button ng-click="edit(parse.id)" class="md-raised"><i class="fa fa-pencil"></i></md-button>
+            <md-button ng-click="destroy(parse.id, $index)" class="md-raised md-warn"><i class="fa fa-close"></i></md-button>
+        </td>
+        <td ng-if="!parse.text">
+            <md-button ng-click="update(parse.unitId, parse.quantity, parse.id, $index, parse.name, parse.is_reviewed)" class="md-raised"><i class="fa fa-floppy-o"></i></md-button>
+            <md-button ng-click="text()" class="md-raised md-warn"><i class="fa fa-info"></i></md-button>
+            <md-progress-circular ng-if="loadingSpin" class="md-hue-2" md-diameter="20px" md-mode="indeterminate"></md-progress-circular>
+        </td>
+    </tr>
+</table>
+</div>
+<md-button md-no-ink ng-click="linkRecipe()" class="md-primary col-md-12">Link this recipe</md-button>

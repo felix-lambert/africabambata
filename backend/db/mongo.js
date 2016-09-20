@@ -1,0 +1,23 @@
+/////////////////////////////////////////////////////////////////
+// MODULE DEPENDENCIES //////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+var mongoose = require('mongoose');
+var config   = require('./database');
+var logger   = require("../../utils/logger");
+
+var mongoOptions = {
+    db: {
+        safe: true
+    }
+};
+
+/////////////////////////////////////////////////////////////////
+// CONNECT TO DATABASE //////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+module.exports = mongoose.connect(config.db, mongoOptions, function(err, res) {
+    if (err) {
+        console.log('ERROR connecting to: ' + config.db + '. ' + err);
+    } else {
+        logger.info('Successfully connected to: ' + config.db);
+    }
+});

@@ -1,0 +1,12 @@
+<p>cool</p>
+<ul class="thumbnails">
+{{foods}}
+    <li ng-repeat="food in foods">
+    	{{food}}
+        <my-parent class="span2 thumbnail" delete="deleteFood(food.id)" food="food">
+            <button class="btn btn-large close pull-right" ng-click="delete()">&times;</button>
+            <hr/>
+            <p>{{food.name}}</p>
+        </my-parent>
+    </li>
+</ul>

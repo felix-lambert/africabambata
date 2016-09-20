@@ -1,0 +1,139 @@
+<div loading></div>
+<a id="back" ng-href="/#/admin/parentfood"><i class="fa fa-reply-all fa-2x"></i>
+</a>
+<h2 class="text-center">{{parent}}</h2>
+<div ng-show="errorMessage" class="alert alert-danger" role="alert">
+    <span class="fa fa-meh-o"></span>
+    <span>{{errorMessage}}</span>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2 class="text-center">Items list</h2>
+            <div class="my-controller">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <form class="well form-search" ng-submit="searchMeal()">
+                            <div class="form-group">
+                                <label>Name:</label>
+                                <input class="form-control" type="text" ng-model="food.name" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <md-input-container>
+                                    <label>Retailers</label>
+                                    <md-select ng-model="food.retailers" multiple>
+                                        <md-optgroup label="Retailers">
+                                            <md-option ng-value="{{retailer.id}}" ng-repeat="retailer in retailers">
+                                                {{retailer.name}}
+                                            </md-option>
+                                        </md-optgroup>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="form-group">  
+                                <button type="submit" id="searchMeal" class="btn">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-xs-4">
+                        <label for="search">items per page:</label>
+                        <input class="form-control" type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+                    </div>
+                </div>
+                <div ng-show="errorMessage" class="alert alert-danger" role="alert">
+                    <span class="fa fa-meh-o"></span>
+                    <span>Error: {{errorMessage}}</span>
+                </div>
+                <br>
+                <div loading></div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table class="table">
+                            
+                            <tr class="active">
+                                <td>
+                                    Name
+                                </td>
+                                <td>
+                                    Retailer
+                                </td>
+                                <td>Add</td>
+                                <td>Main item</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="form-control" type="text" placeholder="Search name..." ng-model="searchIt.name">
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" placeholder="Search retailer..." ng-model="searchIt.retailer">
+                                </td>
+                            </tr>
+                            <tr dir-paginate="meal in meals | filter:searchIt | itemsPerPage: pageSize" current-page="currentPage" pagination-id="paginate1">
+                                <td>{{meal.name}}</td>
+                                <td>
+                                    {{meal.retailer}}
+                                </td>
+                                <td ng-hide="meal.added == true">
+                                    <button id="add" class="btn btn-primary" type="button" ng-click="add(meal, meal.id)"><i class="fa fa-shopping-basket"></i>
+                                    </button>
+                                </td>
+                                <td ng-show="meal.added == true">
+                                    <i class="fa fa-check"></i>
+                                </td>
+                                <td>
+                                    <button id="addMain" ng-hide="meal.added == true" class="btn btn-success" type="button" ng-click="addMain(meal, meal.id)"><i class="fa fa-diamond"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div ng-controller="PaginateController">
+                <div class="text-center">
+                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="templates/dirPagination.tpl.html" pagination-id="paginate1"></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive text-center col-md-6" >
+            <h2 class="text-center">Associated items</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="search">Items per page:</label>
+                        <input type="number" min="1" max="100" class="form-control" ng-model="foodPageSize">
+                    </div>
+                </div>
+                <table class="table">
+                    <br/>
+                    <tr class="active">
+                        <td>
+                            <button class="btn btn-default" id="order" ng-click="orderFood('name')">Name</button>
+                            <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                        </td>
+                        <td>
+                            Remove assocation
+                        </td>
+                        <td>
+                            Define as main item
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="form-control" type="text" placeholder="Search name..." ng-model="searchItem.name">
+                        </td>
+                    </tr>
+                    <tr dir-paginate="food in foods | orderBy:predicate:reverse | filter: searchText | filter:search | filter: searchItem | itemsPerPage: foodPageSize" current-page="currentFoodPage" pagination-id="paginate2" food>
+                        
+                    </tr>
+                </table>
+                <div ng-controller="PaginateController">
+                    <div class="text-center">
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="templates/dirPagination.tpl.html" pagination-id="paginate2"></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,39 @@
+<div loading></div>
+
+<a id="back" ng-href="/#/admin/"><i class="fa fa-reply-all fa-2x"></i></a>
+
+<div ng-show="errorMessage" class="alert alert-danger" role="alert">
+    <span class="fa fa-meh-o"></span>
+    <span>{{errorMessage}}</span>
+</div>
+
+<div class="container">
+    <label>Search: <input type="text" ng-model="searchText"></label>
+    <div class="col-xs-2">
+        <label for="search">items per page:</label>
+        <input class="form-control" type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+    </div>
+    <div class="row" id="exSelects">
+        <div class="table-responsive text-center col-md-12" >
+            <table class="table">
+                
+                <tr class="active">
+                    <td>Parent food</td>
+                    <td>Edit</td>
+                </tr>
+                <tr dir-paginate="food in foods | filter:searchText | itemsPerPage: pageSize" current-page="currentPage">
+                    <td>{{food.name}}</td>
+                    <td>
+                        <a id="cl" ng-href="/#/admin/parentfood/{{food.id}}"><i class="fa fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div ng-controller="PaginateController">
+            <div class="text-center">
+                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="templates/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

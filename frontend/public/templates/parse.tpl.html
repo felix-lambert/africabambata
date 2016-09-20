@@ -1,0 +1,82 @@
+<td>
+	<md-checkbox ng-checked="exists(parse, selected)" ng-click="toggle(parse, selected)">
+	</md-checkbox>
+</td>
+<td class="col-md-2">
+
+
+<!-- 	<md-content class="md-padding">
+	<div layout-gt-sm="row">
+		<md-autocomplete
+		ng-disabled="isDisabled[$index]"
+		md-input-name="autocompleteField"
+		md-input-minlength="1"
+		md-input-maxlength="100"
+		md-no-cache="noCache"
+		md-selected-item="selectedItem.name"
+		md-selected-item-change="selectedItemChange()"
+		md-search-text="searchTextName"
+		md-items=""
+		md-item-text="item._source.name"
+		placeholder="{{parse.name}}">
+		<md-item-template>
+		<span md-highlight-text="searchText"></span>
+		</md-item-template>
+		<div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+			<div ng-message="required">You <b>must</b> have a name.</div>
+			<div ng-message="minlength">Your entry is not long enough.</div>
+			<div ng-message="maxlength">Your entry is too long.</div>
+		</div>
+		</md-autocomplete>
+	</div>
+	</md-content> -->
+</td>
+<td class="col-md-2">
+	<md-input-container class="md-icon-float md-icon-right md-block">
+	<input ng-model="parse.quantity" type="number" min="0" step="1">
+	</md-input-container>
+</td>
+<td class="col-md-2">
+<md-content class="md-padding">
+	<div layout-gt-sm="row">
+	<md-input-container>
+
+	<label>{{parse.unit}}</label>
+	<md-select ng-model="selectedItem.unit">
+      <md-option value="1">g</md-option>
+      	<md-option value="2">mg</md-option>
+		<md-option value="3">mcg</md-option>
+		<md-option value="6">cup</md-option>
+		<md-option value="7">fluid ounce</md-option>
+    	<md-option value="8">fl</md-option>
+      	<md-option value="9">gal</md-option>
+		<md-option value="10">oz</md-option>
+		<md-option value="11">pt</md-option>
+		<md-option value="12">qt</md-option>
+		<md-option value="13">tbs</md-option>
+    	<md-option value="14">tsp</md-option>
+      	<md-option value="15">stick</md-option>
+		<md-option value="16">l</md-option>
+		<md-option value="17">ml</md-option>
+		<md-option value="18">dl</md-option>
+		<md-option value="19">lb</md-option>
+      	<md-option value="20">kg</md-option>
+		<md-option value="21">dkg</md-option>
+		<md-option value="22">cl</md-option>
+    </md-select>
+    </md-input-container>
+    </div>
+    </md-content>
+</td>
+<td>{{parse.original_text}}</td>
+<td></td>
+<td>
+	{{parse.is_reviewed}}
+</td>
+<td>
+	{{parse.has_error}}
+</td>
+<td ng-show="test[$index]">
+	<md-button ng-click="edit(selectedItem, parse.quantity, parse.id, $index, $event)" class="md-raised"><i class="fa fa-pencil"></i></md-button>
+	<md-button ng-click="destroy(parse.id)" class="md-raised md-warn"><i class="fa fa-close"></i></md-button>
+</td>

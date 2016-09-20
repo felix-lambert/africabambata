@@ -1,0 +1,57 @@
+
+<li ng-if='retailer.retailer_id == id'>
+    <div ng-if='retailer.image_url'>
+        <div ng-if="input != true">    
+        <img alt='(No image) ' class='img-rounded' width='50' height='50' src='{{retailer.image_url}}'></img>{{retailer.qty}} {{retailer.name}} 
+        <div ng-if='retailer.price'>at {{retailer.price}}</div>
+        </div>
+        <md-content class="md-padding" md-cols="12" md-cols-gt-md="12" md-cols-md="12" ng-if="input == true">
+            <div layout-gt-sm="row">
+                <md-autocomplete flex="" md-floating-label="{{retailer.description}}" md-input-name="autocompleteField" md-item-text="add._source.name" md-items="add in querySearchAdd(searchTextNameAdd)" md-min-length="1" md-search-text="searchTextNameAdd" md-search-text-change="selectedItemChange(searchTextNameAdd)" md-selected-item="selectedItem.name" md-selected-item-change="selectedItemChange(searchTextNameAdd)" required="">
+                    <md-item-template>
+                        <md-whiteframe flex-gt-md="10" flex-gt-sm="20" flex-sm="30" layout="" layout-align="center center">
+                            <div back-img="{{add._source.suggest.payload.picture}}" class="img-responsive" ng-show="add._source.suggest.payload.picture">
+                                <p style="padding-left: 50px;">
+                                    <a href="{{add._source.suggest.payload.url}}" md-highlight-text="searchText" target="_blank">
+                                        {{add._source.name}} - {{add._source.suggest.payload.price}}
+                                    </a>
+                                </p>
+                            </div>
+                        </md-whiteframe>
+                        <span md-highlight-text="searchText">
+                            (no image)
+                        </span>
+                        <a href="{{add._source.suggest.payload.url}}" md-highlight-text="searchText" target="_blank">
+                            {{add._source.name}} - {{add._source.suggest.payload.price}}
+                        </a>
+                    </md-item-template>
+                    <div ng-messages="searchTextNameAdd.$error">
+                        <div ng-message="required">
+                            This field is required
+                        </div>
+                    </div>
+                </md-autocomplete>
+            </div>
+            <div class="md-list-item-text">
+                <md-input-container class="md-icon-float md-icon-right md-block">
+                    <input min="0" ng-model="retailer.qty" step="0" type="number">
+                    </input>
+                </md-input-container>
+            </div>
+
+            <md-button ng-if="input == true" class="md-primary" md-no-ink="" ng-click="editL(selectedItem.name._source.suggest.payload.item_id, retailer.qty, id)">
+                Edit
+            </md-button>
+            <md-button ng-if="input == true" class="md-raised md-warn" ng-click="text()">
+                <i class="fa fa-info">
+                </i>
+            </md-button>
+        </md-content>
+    </div>
+
+    
+    <md-button class="md-raised" ng-if="input != true" ng-click="editMain()">
+        Change item
+    </md-button>
+
+</li>

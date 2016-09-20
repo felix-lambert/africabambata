@@ -1,0 +1,33 @@
+# logs
+*.log
+npm-debug.log
+npm-debug.log*
+frontend/node_modules
+frontend/npm-debug.log*
+logs/all-logs*
+logs/all-logs.log
+logs/all-logs1.log
+logs/filelog-error.log
+
+# others
+node_modules
+coverage.html
+backend/models/username.txt
+backend/models/password.txt
+backend/models/host.txt
+backend/models/database.txt
+config/username.txt
+config/password.txt
+config/host.txt
+config/database.txt
+certrequest.csr
+hacksparrow-cert.pem
+hacksparrow-key.pem
+ESsynchronize/instacart*.json
+ESsynchronize/peapod.json
+ESsynchronize/ingredients.json
+ESsynchronize/recipe_ingredients.json
+ESsynchronize/safeway.json
+ESsynchronize/freshdirect.json
+ESsynchronize/shipt.json
+ESsynchronize/walmart.json
